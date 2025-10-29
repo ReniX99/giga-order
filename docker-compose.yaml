@@ -1,0 +1,15 @@
+services:
+  postgres-users:
+    image: postgres:18.0-alpine3.22
+    container_name: postgres-users
+    ports:
+      - 5400:5432
+    environment:
+      POSTGRES_USER: ${USERS_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${USERS_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${USERS_POSTGRES_DB}
+    volumes:
+      - postgres-data-users:/var/lib/postgresql
+
+volumes:
+  postgres-data-users:
