@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { USERS_CLIENT } from './constants';
+import { USERS_CLIENT } from '../constants';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
