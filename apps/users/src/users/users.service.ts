@@ -8,6 +8,7 @@ import { RolesService } from '../roles/roles.service';
 import { UserMapper } from './mappers';
 import * as bcrypt from 'bcrypt';
 import { RpcException } from '@nestjs/microservices';
+import { User } from 'apps/users/generated/prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -37,5 +38,22 @@ export class UsersService {
     return {
       id: createdUser.id,
     };
+  }
+
+  async findByEmail(
+    email: string,
+    errorStatusCode: number,
+    errorMessage: string,
+  ): Promise<User> {
+    const user = await this.usersRepository.getByEmail(email);
+
+    if (!user) {
+      throw new RpcException({
+        statusCode: errorStatusCode,
+        message: errorMessage,
+      });
+    }
+
+    return user;
   }
 }
