@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { CookiesModule } from './cookies/cookies.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   controllers: [ApiGatewayController],
@@ -16,6 +17,7 @@ import { CookiesModule } from './cookies/cookies.module';
     UsersModule,
     AuthModule,
     CookiesModule,
+    RolesModule,
   ],
 })
 export class ApiGatewayModule {}
