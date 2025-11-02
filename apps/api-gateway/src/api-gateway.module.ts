@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './modules/auth/auth.module';
 import { CookiesModule } from './modules/cookies/cookies.module';
 import { RolesModule } from './modules/roles/roles.module';
+import { UsersInfoModule } from './modules/users-info/users-info.module';
 
 @Module({
   controllers: [ApiGatewayController],
@@ -18,6 +19,7 @@ import { RolesModule } from './modules/roles/roles.module';
     AuthModule,
     CookiesModule,
     RolesModule,
+    UsersInfoModule,
   ],
 })
 export class ApiGatewayModule {}

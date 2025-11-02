@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { UsersInfoRepository } from './users-info.repository';
 import { RpcException } from '@nestjs/microservices';
 import { UserInfoWithRoles } from './types';
+import { UserInfoDto } from '@app/contracts/users/users-info/dto';
+import { UserInfoMapper } from './mappers/user-info.mapper';
 
 @Injectable()
 export class UsersInfoService {
@@ -22,5 +24,14 @@ export class UsersInfoService {
     this.isUserNull(user);
 
     return user!;
+  }
+
+  async getWithEmailById(id: string): Promise<UserInfoDto> {
+    const user = await this.usersInfoRepository.findWithEmailById(id);
+
+    this.isUserNull(user);
+
+    const dto = UserInfoMapper.toUserInfoDto(user!);
+    return dto;
   }
 }
