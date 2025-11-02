@@ -8,7 +8,7 @@ import {
 } from '@app/contracts/users/auth/dto';
 import * as bcrypt from 'bcrypt';
 import { RpcException } from '@nestjs/microservices';
-import { TJwtPayload } from './types';
+import { TJwtPayload, TJwtResponse } from './types';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as ms from 'ms';
@@ -60,6 +60,14 @@ export class AuthService {
     return {
       id: user.id,
       token,
+    };
+  }
+
+  async validateToken(payload: TJwtPayload): Promise<TJwtResponse> {
+    const user = await this.usersService.fingById(payload.userId);
+
+    return {
+      id: user.id,
     };
   }
 }

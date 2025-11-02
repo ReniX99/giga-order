@@ -56,4 +56,17 @@ export class UsersService {
 
     return user;
   }
+
+  async fingById(id: string): Promise<User> {
+    const user = await this.usersRepository.findById(id);
+
+    if (!user) {
+      throw new RpcException({
+        statusCode: 404,
+        message: 'User not found',
+      });
+    }
+
+    return user;
+  }
 }
