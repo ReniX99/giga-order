@@ -20,14 +20,14 @@ export class UsersService {
   async create(dto: RegisterRequestDto): Promise<RegisterResponseDto> {
     const { email, password } = dto;
 
-    const existedUser = await this.usersRepository.getByEmail(email);
+    const existedUser = await this.usersRepository.findByEmail(email);
     if (existedUser) {
       throw new RpcException({
         statusCode: 400,
         message: 'User with same email exists',
       });
     }
-    const role = await this.rolesService.findByName('Пользователь');
+    const role = await this.rolesService.getByName('Пользователь');
 
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
@@ -40,12 +40,12 @@ export class UsersService {
     };
   }
 
-  async findByEmail(
+  async getByEmail(
     email: string,
     errorStatusCode: number,
     errorMessage: string,
   ): Promise<User> {
-    const user = await this.usersRepository.getByEmail(email);
+    const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
       throw new RpcException({
@@ -57,7 +57,7 @@ export class UsersService {
     return user;
   }
 
-  async fingById(id: string): Promise<User> {
+  async getById(id: string): Promise<User> {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {

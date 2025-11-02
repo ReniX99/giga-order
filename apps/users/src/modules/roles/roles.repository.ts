@@ -15,6 +15,6 @@ export class RolesRepository {
   }
 
   async getAll(): Promise<Role[]> {
-    return await this.prismaService.role.findMany({});
+    return await this.prismaService.role.findMany();
   }
 }

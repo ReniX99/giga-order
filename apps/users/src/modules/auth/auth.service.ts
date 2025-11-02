@@ -37,7 +37,7 @@ export class AuthService {
     const errorStatusCode: number = 400;
     const errorMessage: string = 'Wrong email or password';
 
-    const user = await this.usersService.findByEmail(
+    const user = await this.usersService.getByEmail(
       email,
       errorStatusCode,
       errorMessage,
@@ -66,7 +66,7 @@ export class AuthService {
   }
 
   async validateToken(payload: TJwtPayload): Promise<TJwtResponse> {
-    const user = await this.usersInfoService.findWithRolesById(payload.userId);
+    const user = await this.usersInfoService.getWithRolesById(payload.userId);
 
     return {
       id: user.userId,

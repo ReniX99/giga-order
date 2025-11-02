@@ -6,7 +6,7 @@ import { UserInfoWithRoles } from './types';
 export class UsersInfoRepository {
   constructor(private readonly prismaSerivce: PrismaService) {}
 
-  async findById(id: string): Promise<UserInfoWithRoles | null> {
+  async findWithRolesById(id: string): Promise<UserInfoWithRoles | null> {
     return await this.prismaSerivce.userInfo.findUnique({
       where: {
         userId: id,

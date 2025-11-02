@@ -9,17 +9,21 @@ import { RoleMapper } from './mappers';
 export class RolesService {
   constructor(private rolesRepository: RolesRepository) {}
 
-  async findByName(name: string): Promise<Role> {
-    const role = await this.rolesRepository.findByName(name);
-
+  isRoleNull(role: any): void {
     if (!role) {
       throw new RpcException({
         statusCode: 404,
         message: 'Role not found',
       });
     }
+  }
 
-    return role;
+  async getByName(name: string): Promise<Role> {
+    const role = await this.rolesRepository.findByName(name);
+
+    this.isRoleNull(role);
+
+    return role!;
   }
 
   async getAll(): Promise<RoleDto[]> {
