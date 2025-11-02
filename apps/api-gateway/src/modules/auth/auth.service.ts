@@ -8,7 +8,7 @@ import {
   RegisterRequestDto,
   RegisterResponseDto,
 } from '@app/contracts/users/auth/dto';
-import { USERS_PATTERNS } from '@app/contracts/users/users-patterns';
+import { AUTH_PATTERNS } from '@app/contracts/users/auth/auth-patterns';
 import { firstValueFrom } from 'rxjs';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
@@ -31,7 +31,7 @@ export class AuthService {
 
   async register(dto: RegisterRequestDto): Promise<RegisterResponseDto> {
     const obsResponse = this.usersClient.send<RegisterResponseDto>(
-      USERS_PATTERNS.REGISTER,
+      AUTH_PATTERNS.REGISTER,
       dto,
     );
 
@@ -44,7 +44,7 @@ export class AuthService {
     dto: LoginRequestDto,
   ): Promise<LoginResponseDto> {
     const objResponse = this.usersClient.send<LoginMicroserviceResponseDto>(
-      USERS_PATTERNS.LOGIN,
+      AUTH_PATTERNS.LOGIN,
       dto,
     );
 
