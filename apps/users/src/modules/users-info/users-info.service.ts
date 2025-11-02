@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { UsersInfoRepository } from './users-info.repository';
 import { RpcException } from '@nestjs/microservices';
 import { UserInfoWithRoles } from './types';
-import { UserInfoDto } from '@app/contracts/users/users-info/dto';
+import {
+  ShortUserInfoDto,
+  UpdatedUserInfoDto,
+  UserInfoDto,
+} from '@app/contracts/users/users-info/dto';
 import { UserInfoMapper } from './mappers/user-info.mapper';
 
 @Injectable()
@@ -33,5 +37,22 @@ export class UsersInfoService {
 
     const dto = UserInfoMapper.toUserInfoDto(user!);
     return dto;
+  }
+
+  async updateById(
+    id: string,
+    requestDto: UpdatedUserInfoDto,
+  ): Promise<ShortUserInfoDto> {
+    const user = await this.usersInfoRepository.findById(id);
+
+    this.isUserNull(user);
+
+    const updatedUser = await this.usersInfoRepository.updateById(
+      user!.userId,
+      requestDto,
+    );
+
+    const responseDto = UserInfoMapper.toShortUserInfoDto(updatedUser);
+    return responseDto;
   }
 }
