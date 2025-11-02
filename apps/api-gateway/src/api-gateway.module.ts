@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ApiGatewayController } from './api-gateway.controller';
 import { ApiGatewayService } from './api-gateway.service';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './modules/users/users.module';
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
-import { CookiesModule } from './cookies/cookies.module';
-import { RolesModule } from './roles/roles.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { CookiesModule } from './modules/cookies/cookies.module';
+import { RolesModule } from './modules/roles/roles.module';
 
 @Module({
   controllers: [ApiGatewayController],

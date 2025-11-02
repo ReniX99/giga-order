@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { USERS_CLIENT } from '../constants';
+import { USERS_CLIENT } from '../../constants';
 import { ClientProxy } from '@nestjs/microservices';
 import { RoleDto } from '@app/contracts/users/roles/dto';
 import { ROLES_PATTERNS } from '@app/contracts/users/roles/roles-patterns';

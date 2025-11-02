@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthController } from './auth.controller';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { USERS_CLIENT } from '../constants';
+import { UsersService } from './users.service';
+import { UsersController } from './users.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { USERS_CLIENT } from '../../constants';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     ClientsModule.registerAsync([
       {
-        imports: [ConfigModule],
         name: USERS_CLIENT,
+        imports: [ConfigModule],
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
@@ -21,7 +21,8 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       },
     ]),
   ],
-  controllers: [AuthController],
-  providers: [AuthService],
+
+  controllers: [UsersController],
+  providers: [UsersService],
 })
-export class AuthModule {}
+export class UsersModule {}

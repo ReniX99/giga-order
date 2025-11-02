@@ -1,7 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/api-gateway/src",
+  "sourceRoot": "apps/api-gateway/src/modules",
+  "entryFile": "../main",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
@@ -13,8 +14,8 @@
     "api-gateway": {
       "type": "application",
       "root": "apps/api-gateway",
-      "entryFile": "main",
-      "sourceRoot": "apps/api-gateway/src",
+      "entryFile": "../main",
+      "sourceRoot": "apps/api-gateway/src/modules",
       "compilerOptions": {
         "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
       }
@@ -31,8 +32,8 @@
     "users": {
       "type": "application",
       "root": "apps/users",
-      "entryFile": "main",
-      "sourceRoot": "apps/users/src",
+      "entryFile": "../main",
+      "sourceRoot": "apps/users/src/modules",
       "compilerOptions": {
         "tsConfigPath": "apps/users/tsconfig.app.json"
       }

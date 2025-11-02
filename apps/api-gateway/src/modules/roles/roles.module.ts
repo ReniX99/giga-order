@@ -3,7 +3,7 @@ import { RolesService } from './roles.service';
 import { RolesController } from './roles.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { USERS_CLIENT } from '../constants';
+import { USERS_CLIENT } from '../../constants';
 import { CookiesModule } from '../cookies/cookies.module';
 
 @Module({
