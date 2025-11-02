@@ -12,6 +12,7 @@ import { TJwtPayload, TJwtResponse } from './types';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as ms from 'ms';
+import { UsersInfoService } from '../users-info/users-info.service';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +20,7 @@ export class AuthService {
 
   constructor(
     private usersService: UsersService,
+    private usersInfoService: UsersInfoService,
     private jwtService: JwtService,
     private configService: ConfigService,
   ) {
@@ -64,10 +66,11 @@ export class AuthService {
   }
 
   async validateToken(payload: TJwtPayload): Promise<TJwtResponse> {
-    const user = await this.usersService.fingById(payload.userId);
+    const user = await this.usersInfoService.findWithRolesById(payload.userId);
 
     return {
-      id: user.id,
+      id: user.userId,
+      roles: user.roles.map((r) => r.role.name),
     };
   }
 }
