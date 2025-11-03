@@ -43,12 +43,12 @@ export class AuthService {
     httpResponse: Response,
     dto: LoginRequestDto,
   ): Promise<LoginResponseDto> {
-    const objResponse = this.usersClient.send<LoginMicroserviceResponseDto>(
+    const obsResponse = this.usersClient.send<LoginMicroserviceResponseDto>(
       AUTH_PATTERNS.LOGIN,
       dto,
     );
 
-    const response = await firstValueFrom(objResponse);
+    const response = await firstValueFrom(obsResponse);
     const { token } = response;
 
     this.setCookies(

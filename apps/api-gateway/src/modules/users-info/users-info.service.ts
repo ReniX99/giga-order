@@ -53,12 +53,12 @@ export class UsersInfoService {
         token,
       },
     };
-    const objResponse = this.usersClient.send<UserInfoDto>(
+    const obsResponse = this.usersClient.send<UserInfoDto>(
       USERS_INFO_PATTERNS.GET_BY_ID,
       requestMessage,
     );
 
-    const response = await firstValueFrom(objResponse);
+    const response = await firstValueFrom(obsResponse);
     return response;
   }
 
@@ -74,12 +74,12 @@ export class UsersInfoService {
         token,
       },
     };
-    const objResponse = this.usersClient.send<ShortUserInfoDto>(
+    const obsResponse = this.usersClient.send<ShortUserInfoDto>(
       USERS_INFO_PATTERNS.UPDATE,
       requestMessage,
     );
 
-    const response = await firstValueFrom(objResponse);
+    const response = await firstValueFrom(obsResponse);
     return response;
   }
 }

@@ -30,12 +30,12 @@ export class RolesService {
         token,
       },
     };
-    const objResponse = this.usersClient.send<RoleDto[]>(
+    const obsResponse = this.usersClient.send<RoleDto[]>(
       ROLES_PATTERNS.GET_ALL,
       requestMessage,
     );
 
-    const response = await firstValueFrom(objResponse);
+    const response = await firstValueFrom(obsResponse);
     return response;
   }
 }
