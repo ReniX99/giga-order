@@ -8,6 +8,8 @@ import {
   UserInfoDto,
 } from '@app/contracts/users/users-info/dto';
 import { UserInfoMapper } from './mappers/user-info.mapper';
+import { UserInfoQuery } from '@app/contracts/users/users-info/query';
+import { FullUserInfoDto } from '@app/contracts/users/users-info/dto/full-user-info.dto';
 
 @Injectable()
 export class UsersInfoService {
@@ -20,6 +22,13 @@ export class UsersInfoService {
         message: 'User not found',
       });
     }
+  }
+
+  async getAll(query: UserInfoQuery): Promise<FullUserInfoDto[]> {
+    const users = await this.usersInfoRepository.getAll(query);
+
+    const dto = users.map((u) => UserInfoMapper.toFullUserInfoDto(u));
+    return dto;
   }
 
   async getWithRolesById(id: string): Promise<UserInfoWithRoles> {

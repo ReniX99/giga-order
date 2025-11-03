@@ -3,3 +3,15 @@ export type TUpdatedUserInfo = {
 
   firstName: string;
 };
+
+export type TUserIntoFilter = {
+  email?: string;
+
+  lastName?: string;
+
+  firstName?: string;
+
+  page?: number;
+
+  count?: number;
+};

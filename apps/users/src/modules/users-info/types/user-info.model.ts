@@ -14,3 +14,10 @@ export type UserInfoWithRoles = UserInfo & {
 export type UserInfoWithEmail = UserInfo & {
   user: User;
 };
+
+export type FullUserInfo = UserInfo & {
+  user: User;
+  roles: (UserRole & {
+    role: Role;
+  })[];
+};

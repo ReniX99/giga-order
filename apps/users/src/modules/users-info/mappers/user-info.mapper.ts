@@ -1,8 +1,9 @@
 import {
+  FullUserInfoDto,
   ShortUserInfoDto,
   UserInfoDto,
 } from '@app/contracts/users/users-info/dto';
-import { UserInfoWithEmail } from '../types';
+import { FullUserInfo, UserInfoWithEmail } from '../types';
 import { UserInfo } from 'apps/users/generated/prisma/client';
 
 export class UserInfoMapper {
@@ -18,6 +19,15 @@ export class UserInfoMapper {
     return {
       lastName: userInfoModel.lastName,
       firstName: userInfoModel.firstName,
+    };
+  }
+
+  static toFullUserInfoDto(userInfoModel: FullUserInfo): FullUserInfoDto {
+    return {
+      email: userInfoModel.user.email,
+      lastName: userInfoModel.lastName,
+      firstName: userInfoModel.firstName,
+      roles: userInfoModel.roles.map((r) => r.role.name),
     };
   }
 }
