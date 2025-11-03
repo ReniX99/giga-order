@@ -8,11 +8,14 @@ import {
   UpdatedUserInfoDto,
   UserInfoDto,
 } from '@app/contracts/users/users-info/dto';
-import { Authentication, User } from '../../common/decorators';
+import {
+  Authentication,
+  Authorization,
+  Roles,
+  User,
+} from '../../common/decorators';
 import { RoleEnum } from '../roles/enums';
-import { Authorization } from '../../common/decorators/authorization.decorator';
 import { UserInfoQuery } from '@app/contracts/users/users-info/query';
-import { Roles } from '../../common/decorators/roles.decorator';
 
 @Controller()
 export class UsersInfoController {

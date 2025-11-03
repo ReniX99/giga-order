@@ -3,9 +3,8 @@ import { RolesService } from './roles.service';
 import { RoleDto } from '@app/contracts/users/roles/dto';
 import { MessagePattern } from '@nestjs/microservices';
 import { ROLES_PATTERNS } from '@app/contracts/users/roles/roles-patterns';
-import { Authorization } from '../../common/decorators/authorization.decorator';
-import { Roles } from '../../common/decorators/roles.decorator';
 import { RoleEnum } from './enums';
+import { Authorization, Roles } from '../../common/decorators';
 
 @Controller()
 export class RolesController {
