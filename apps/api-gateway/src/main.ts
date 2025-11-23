@@ -9,6 +9,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
 
-  await app.listen(process.env.port as string | number);
+  await app.listen(process.env.PORT as string | number);
 }
 bootstrap();

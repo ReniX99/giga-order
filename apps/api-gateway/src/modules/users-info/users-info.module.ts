@@ -15,6 +15,7 @@ import { CookiesModule } from '../cookies/cookies.module';
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {
+            host: configService.getOrThrow<string>('USERS_SERVICE_HOST'),
             port: configService.getOrThrow<number>('USERS_SERVICE_PORT'),
           },
         }),

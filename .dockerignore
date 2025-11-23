@@ -1,0 +1,13 @@
+node_modules
+dist
+.dockerignore
+.git
+.gitignore
+.env
+.vscode
+
+**/*.spec.ts
+
+**/test/
+
+**/generated/
