@@ -1,10 +1,15 @@
 import { PrismaClient } from './generated/client';
 import * as dotenv from 'dotenv';
 import * as bcrypt from 'bcrypt';
+import { PrismaPg } from '@prisma/adapter-pg';
 
 dotenv.config({ path: '../.env' });
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+});
+
+const prisma = new PrismaClient({ adapter });
 async function main() {
   const roles = [
     { name: 'Админ' },
