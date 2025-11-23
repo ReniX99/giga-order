@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CookiesModule } from './modules/cookies/cookies.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { UsersInfoModule } from './modules/users-info/users-info.module';
+import { OrdersModule } from './modules/orders/orders.module';
 
 @Module({
   controllers: [ApiGatewayController],
@@ -20,6 +21,7 @@ import { UsersInfoModule } from './modules/users-info/users-info.module';
     CookiesModule,
     RolesModule,
     UsersInfoModule,
+    OrdersModule,
   ],
 })
 export class ApiGatewayModule {}

@@ -1,1 +1,2 @@
 export const USERS_CLIENT = 'USERS_CLIENT';
+export const ORDERS_CLIENT = 'ORDERS_CLIENT';

@@ -8,10 +8,12 @@
   "scripts": {
     "build": "nest build api-gateway",
     "build-users": "nest build users",
+    "build-orders": "nest build orders",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --env-file=apps/api-gateway/.env --watch",
     "start-users:dev": "nest start --env-file=apps/users/.env users --watch",
+    "start-orders:dev": "nest start --env-file=apps/orders/.env orders --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
