@@ -8,7 +8,7 @@ import { RolesService } from '../roles/roles.service';
 import { UserMapper } from './mappers';
 import * as bcrypt from 'bcrypt';
 import { RpcException } from '@nestjs/microservices';
-import { User } from 'apps/users/generated/prisma/client';
+import { User } from '../prisma/generated/client';
 
 @Injectable()
 export class UsersService {

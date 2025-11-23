@@ -4,7 +4,7 @@ import {
   UserInfoDto,
 } from '@app/contracts/users/users-info/dto';
 import { FullUserInfo, UserInfoWithEmail } from '../types';
-import { UserInfo } from 'apps/users/generated/prisma/client';
+import { UserInfo } from '../../prisma/generated/client';
 
 export class UserInfoMapper {
   static toUserInfoDto(userInfoModel: UserInfoWithEmail): UserInfoDto {

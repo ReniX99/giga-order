@@ -1,5 +1,5 @@
 import { RoleDto } from '@app/contracts/users/roles/dto';
-import { Role } from 'apps/users/generated/prisma/client';
+import { Role } from '../../prisma/generated/client';
 
 export const role: Role = {
   id: 1,

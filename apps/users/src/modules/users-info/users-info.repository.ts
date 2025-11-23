@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { FullUserInfo, UserInfoWithEmail, UserInfoWithRoles } from './types';
 import { TUpdatedUserInfo, TUserIntoFilter } from './types/user-info.type';
-import { UserInfo } from 'apps/users/generated/prisma/client';
+import { UserInfo } from '../prisma/generated/client';
 
 @Injectable()
 export class UsersInfoRepository {

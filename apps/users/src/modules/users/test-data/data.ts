@@ -2,8 +2,8 @@ import {
   RegisterRequestDto,
   RegisterResponseDto,
 } from '@app/contracts/users/auth/dto';
-import { Role, User } from 'apps/users/generated/prisma/client';
 import * as bcrypt from 'bcrypt';
+import { Role, User } from '../../prisma/generated/client';
 
 export const createUserDto: RegisterRequestDto = {
   email: 'mock@gmail.com',

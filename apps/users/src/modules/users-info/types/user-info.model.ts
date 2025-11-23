@@ -1,9 +1,4 @@
-import {
-  Role,
-  User,
-  UserInfo,
-  UserRole,
-} from 'apps/users/generated/prisma/client';
+import { Role, User, UserInfo, UserRole } from '../../prisma/generated/client';
 
 export type UserInfoWithRoles = UserInfo & {
   roles: (UserRole & {

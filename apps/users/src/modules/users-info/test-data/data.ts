@@ -5,8 +5,8 @@ import {
   UserInfoDto,
 } from '@app/contracts/users/users-info/dto';
 import { UserInfoQuery } from '@app/contracts/users/users-info/query';
-import { UserInfo } from 'apps/users/generated/prisma/client';
 import { FullUserInfo, UserInfoWithEmail, UserInfoWithRoles } from '../types';
+import { UserInfo } from '../../prisma/generated/client';
 
 export const userId: string = 'e5f8171d-9f1c-4c39-b3ff-46acc17c9da2';
 export const userInfo: UserInfo = {

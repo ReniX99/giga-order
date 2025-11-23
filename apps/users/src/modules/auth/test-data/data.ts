@@ -4,7 +4,7 @@ import {
   RegisterRequestDto,
   RegisterResponseDto,
 } from '@app/contracts/users/auth/dto';
-import { User, UserInfo } from 'apps/users/generated/prisma/client';
+import { User, UserInfo } from '../../prisma/generated/client';
 import * as bcrypt from 'bcrypt';
 import { UserInfoWithRoles } from '../../users-info/types';
 import { TJwtPayload, TJwtResponse } from '../types';

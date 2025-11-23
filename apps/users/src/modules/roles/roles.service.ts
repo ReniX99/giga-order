@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { RolesRepository } from './roles.repository';
 import { RpcException } from '@nestjs/microservices';
-import { Role } from 'apps/users/generated/prisma/client';
 import { RoleDto } from '@app/contracts/users/roles/dto';
 import { RoleMapper } from './mappers';
+import { Role } from '../prisma/generated/client';
 
 @Injectable()
 export class RolesService {
