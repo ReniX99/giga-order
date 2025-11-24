@@ -17,4 +17,12 @@ export class ProductsRepository {
       },
     });
   }
+
+  async getAll(): Promise<Product[]> {
+    return await this.prismaService.product.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    });
+  }
 }

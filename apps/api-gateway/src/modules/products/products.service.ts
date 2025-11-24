@@ -23,4 +23,14 @@ export class ProductsService {
     const response = await firstValueFrom(obsResponse);
     return response;
   }
+
+  async getAll(): Promise<ProductDto[]> {
+    const obsResponse = this.ordersClient.send<ProductDto[]>(
+      PRODUCTS_PATTERNS.GET_ALL,
+      {},
+    );
+
+    const response = await firstValueFrom(obsResponse);
+    return response;
+  }
 }

@@ -16,4 +16,10 @@ export class ProductsService {
     const responseDto = ProductMapper.toProductDto(product);
     return responseDto;
   }
+
+  async getAll(): Promise<ProductDto[]> {
+    const products = await this.productsRepository.getAll();
+
+    return products.map((p) => ProductMapper.toProductDto(p));
+  }
 }

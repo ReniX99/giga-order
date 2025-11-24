@@ -15,4 +15,9 @@ export class ProductsController {
   async create(@Payload() dto: CreateProductDto): Promise<ProductDto> {
     return await this.productsService.create(dto);
   }
+
+  @MessagePattern(PRODUCTS_PATTERNS.GET_ALL)
+  async getAll(): Promise<ProductDto[]> {
+    return await this.productsService.getAll();
+  }
 }
