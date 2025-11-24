@@ -32,7 +32,7 @@
     "orders": {
       "type": "application",
       "root": "apps/orders",
-      "entryFile": "main",
+      "entryFile": "../main",
       "sourceRoot": "apps/orders/src/modules",
       "compilerOptions": {
         "tsConfigPath": "apps/orders/tsconfig.app.json"
