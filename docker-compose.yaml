@@ -11,6 +11,18 @@ services:
     volumes:
       - postgres-data-users:/var/lib/postgresql
 
+  postgres-orders:
+    image: postgres:18.0-alpine3.22
+    container_name: postgres-orders
+    ports:
+      - 5401:5432
+    environment:
+      POSTGRES_USER: ${ORDERS_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${ORDERS_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${ORDERS_POSTGRES_DB}
+    volumes:
+      - postgres-data-orders:/var/lib/postgresql
+
   api-gateway:
     build:
       context: .
@@ -36,3 +48,4 @@ services:
 
 volumes:
   postgres-data-users:
+  postgres-data-orders:
