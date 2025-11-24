@@ -8,6 +8,7 @@ import { CookiesModule } from './modules/cookies/cookies.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { UsersInfoModule } from './modules/users-info/users-info.module';
 import { OrdersModule } from './modules/orders/orders.module';
+import { ProductsModule } from './modules/products/products.module';
 
 @Module({
   controllers: [ApiGatewayController],
@@ -22,6 +23,7 @@ import { OrdersModule } from './modules/orders/orders.module';
     RolesModule,
     UsersInfoModule,
     OrdersModule,
+    ProductsModule,
   ],
 })
 export class ApiGatewayModule {}
