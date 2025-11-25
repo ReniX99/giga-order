@@ -34,6 +34,14 @@ export class ProductsRepository {
     });
   }
 
+  async getByName(name: string): Promise<Product | null> {
+    return await this.prismaService.product.findUnique({
+      where: {
+        name,
+      },
+    });
+  }
+
   async delete(id: number): Promise<void> {
     await this.prismaService.product.delete({
       where: {

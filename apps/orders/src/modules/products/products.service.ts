@@ -14,9 +14,17 @@ export class ProductsService {
   constructor(private readonly productsRepository: ProductsRepository) {}
 
   async create(requestDto: CreateProductDto): Promise<ProductDto> {
-    const product = await this.productsRepository.create(requestDto);
+    const product = await this.productsRepository.getByName(requestDto.name);
 
-    const responseDto = ProductMapper.toProductDto(product);
+    if (product) {
+      throw new RpcException({
+        statusCode: 404,
+        message: 'Product already exists',
+      });
+    }
+    const createdProduct = await this.productsRepository.create(requestDto);
+
+    const responseDto = ProductMapper.toProductDto(createdProduct);
     return responseDto;
   }
 
