@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto, OrderDto } from '@app/contracts/orders/orders/dto';
 import { JwtInCookies } from '../../common/decorators';
@@ -15,5 +15,11 @@ export class OrdersController {
     @Req() request: Request,
   ): Promise<OrderDto> {
     return await this.ordersService.create(dto, request);
+  }
+
+  @JwtInCookies()
+  @Get(':id')
+  async getById(@Param('id') orderId: string, @Req() request: Request) {
+    return await this.ordersService.getById(orderId, request);
   }
 }

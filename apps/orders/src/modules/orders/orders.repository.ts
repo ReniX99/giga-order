@@ -31,4 +31,20 @@ export class OrdersRepository {
       },
     });
   }
+
+  async getById(id: string): Promise<OrderWithProducts | null> {
+    return await this.prismaSerivce.order.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        products: {
+          include: {
+            product: true,
+          },
+        },
+        status: true,
+      },
+    });
+  }
 }

@@ -1,7 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ORDERS_CLIENT } from '../../constants';
 import { ClientProxy } from '@nestjs/microservices';
-import { CreateOrderDto, OrderDto } from '@app/contracts/orders/orders/dto';
+import {
+  CreateOrderDto,
+  OrderDto,
+  OrderIdDto,
+} from '@app/contracts/orders/orders/dto';
 import { ORDERS_PATTERNS } from '@app/contracts/orders/orders/orders-patterns';
 import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -30,6 +34,31 @@ export class OrdersService {
 
     const obsResponse = this.ordersClient.send<OrderDto>(
       ORDERS_PATTERNS.CREATE,
+      requestMessage,
+    );
+
+    const response = await firstValueFrom(obsResponse);
+    return response;
+  }
+
+  async getById(orderId: string, request: Request): Promise<OrderDto> {
+    const userInfo = await this.authService.authorize(request);
+
+    const dto: OrderIdDto = {
+      id: orderId,
+    };
+    const requestMessage: RequestOrdersMessageDto<OrderIdDto> = {
+      data: dto,
+      metadata: {
+        user: {
+          id: userInfo.userId,
+          roles: userInfo.roles,
+        },
+      },
+    };
+
+    const obsResponse = this.ordersClient.send<OrderDto>(
+      ORDERS_PATTERNS.GET_BY_ID,
       requestMessage,
     );
 
