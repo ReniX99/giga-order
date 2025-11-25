@@ -9,6 +9,7 @@ import { OrderMapper } from './mappers';
 import { StatusesService } from '../statuses/statuses.service';
 import { TCreateOrder } from './types';
 import { RpcException } from '@nestjs/microservices';
+import { OrderQuery } from '@app/contracts/orders/orders/query';
 
 @Injectable()
 export class OrdersService {
@@ -54,5 +55,12 @@ export class OrdersService {
 
     const responseDto = OrderMapper.toOrderDto(order);
     return responseDto;
+  }
+
+  async getAll(query: OrderQuery, userId: string): Promise<OrderDto[]> {
+    const orders = await this.ordersRepository.getAll(query, userId);
+
+    const dto = orders.map((o) => OrderMapper.toOrderDto(o));
+    return dto;
   }
 }

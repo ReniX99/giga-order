@@ -9,6 +9,7 @@ import {
 } from '@app/contracts/orders/orders/dto';
 import { Authorization, Roles, User } from '../../common/decorators';
 import { RoleEnum } from '@app/contracts/shared/enums';
+import { OrderQuery } from '@app/contracts/orders/orders/query';
 
 @Controller('orders')
 export class OrdersController {
@@ -32,5 +33,12 @@ export class OrdersController {
     @User('id') userId: string,
   ): Promise<OrderDto> {
     return await this.ordersService.getById(dto, userId);
+  }
+
+  @Roles(RoleEnum.USER)
+  @Authorization()
+  @MessagePattern(ORDERS_PATTERNS.GET_ALL)
+  async getAll(@Payload('data') query: OrderQuery, @User('id') userId: string) {
+    return await this.ordersService.getAll(query, userId);
   }
 }

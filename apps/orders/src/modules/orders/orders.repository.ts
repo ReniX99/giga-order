@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { OrderWithProducts, TCreateOrder } from './types';
+import { OrderWithProducts, TCreateOrder, TOrderFilter } from './types';
 
 @Injectable()
 export class OrdersRepository {
@@ -29,6 +29,50 @@ export class OrdersRepository {
         },
         status: true,
       },
+    });
+  }
+
+  async getAll(
+    orderFilter: TOrderFilter,
+    userId: string,
+  ): Promise<OrderWithProducts[]> {
+    const { status, page, count } = orderFilter;
+
+    let skip: number = 0;
+    if (page && count) {
+      skip = (page - 1) * count;
+    }
+
+    return await this.prismaSerivce.order.findMany({
+      where: {
+        userId,
+        status: {
+          name: {
+            contains: status,
+            mode: 'insensitive',
+          },
+        },
+      },
+      orderBy: [
+        {
+          status: {
+            name: 'asc',
+          },
+        },
+        {
+          createdAt: 'asc',
+        },
+      ],
+      include: {
+        status: true,
+        products: {
+          include: {
+            product: true,
+          },
+        },
+      },
+      skip,
+      take: count,
     });
   }
 

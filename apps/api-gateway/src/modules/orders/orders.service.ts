@@ -11,6 +11,7 @@ import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Request } from 'express';
 import { RequestOrdersMessageDto } from '@app/contracts/shared/dto';
+import { OrderQuery } from '@app/contracts/orders/orders/query';
 
 @Injectable()
 export class OrdersService {
@@ -59,6 +60,28 @@ export class OrdersService {
 
     const obsResponse = this.ordersClient.send<OrderDto>(
       ORDERS_PATTERNS.GET_BY_ID,
+      requestMessage,
+    );
+
+    const response = await firstValueFrom(obsResponse);
+    return response;
+  }
+
+  async getAll(query: OrderQuery, request: Request): Promise<OrderDto[]> {
+    const userInfo = await this.authService.authorize(request);
+
+    const requestMessage: RequestOrdersMessageDto<OrderQuery> = {
+      data: query,
+      metadata: {
+        user: {
+          id: userInfo.userId,
+          roles: userInfo.roles,
+        },
+      },
+    };
+
+    const obsResponse = this.ordersClient.send<OrderDto[]>(
+      ORDERS_PATTERNS.GET_ALL,
       requestMessage,
     );
 

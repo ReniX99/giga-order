@@ -11,3 +11,11 @@ export type TOrderProduct = {
 
   count: number;
 };
+
+export type TOrderFilter = {
+  status?: string;
+
+  page?: number;
+
+  count?: number;
+};
