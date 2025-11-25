@@ -25,4 +25,20 @@ export class ProductsRepository {
       },
     });
   }
+
+  async getById(id: number): Promise<Product | null> {
+    return await this.prismaService.product.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.prismaService.product.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

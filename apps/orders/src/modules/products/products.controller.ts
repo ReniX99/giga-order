@@ -4,6 +4,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { PRODUCTS_PATTERNS } from '@app/contracts/orders/products/products-patterns';
 import {
   CreateProductDto,
+  DeleteProductDto,
   ProductDto,
 } from '@app/contracts/orders/products/dto';
 import { Authorization, Roles } from '../orders/common/decorators';
@@ -23,5 +24,12 @@ export class ProductsController {
   @MessagePattern(PRODUCTS_PATTERNS.GET_ALL)
   async getAll(): Promise<ProductDto[]> {
     return await this.productsService.getAll();
+  }
+
+  @Roles(RoleEnum.MANAGER)
+  @Authorization()
+  @MessagePattern(PRODUCTS_PATTERNS.DELETE)
+  async delete(@Payload('data') dto: DeleteProductDto): Promise<boolean> {
+    return await this.productsService.delete(dto);
   }
 }

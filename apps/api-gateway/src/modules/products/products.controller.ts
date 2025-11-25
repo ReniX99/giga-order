@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Req,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import {
   CreateProductDto,
@@ -23,5 +31,14 @@ export class ProductsController {
   @Get()
   async getAll(): Promise<ProductDto[]> {
     return await this.productsService.getAll();
+  }
+
+  @JwtInCookies()
+  @Delete(':id')
+  async delete(
+    @Param('id') id: string,
+    @Req() request: Request,
+  ): Promise<void> {
+    await this.productsService.delete(+id, request);
   }
 }
