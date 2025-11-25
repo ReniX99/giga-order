@@ -112,18 +112,21 @@ export const fullUserInfo: FullUserInfo[] = [
 
 export const fullUsersInfoDto: FullUserInfoDto[] = [
   {
+    id: userId,
     email: 'user1@gmail.com',
     lastName: 'Иванов',
     firstName: 'Иван',
     roles: ['Пользователь'],
   },
   {
+    id: userId,
     email: 'user2@gmail.com',
     lastName: 'Сидоров',
     firstName: 'Иван',
     roles: ['Менеджер'],
   },
   {
+    id: userId,
     email: 'user3@gmail.com',
     lastName: 'Фёдоров',
     firstName: 'Иван',

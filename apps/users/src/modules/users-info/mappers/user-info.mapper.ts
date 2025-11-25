@@ -24,6 +24,7 @@ export class UserInfoMapper {
 
   static toFullUserInfoDto(userInfoModel: FullUserInfo): FullUserInfoDto {
     return {
+      id: userInfoModel.userId,
       email: userInfoModel.user.email,
       lastName: userInfoModel.lastName,
       firstName: userInfoModel.firstName,

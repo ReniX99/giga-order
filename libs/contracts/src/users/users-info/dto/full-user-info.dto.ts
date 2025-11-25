@@ -1,4 +1,6 @@
 export class FullUserInfoDto {
+  id: string;
+
   email: string;
 
   lastName: string;
