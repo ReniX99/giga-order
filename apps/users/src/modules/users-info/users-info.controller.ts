@@ -14,7 +14,7 @@ import {
   Roles,
   User,
 } from '../../common/decorators';
-import { RoleEnum } from '../roles/enums';
+import { RoleEnum } from '@app/contracts/shared/enums';
 import { UserInfoQuery } from '@app/contracts/users/users-info/query';
 
 @Controller()

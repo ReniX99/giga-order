@@ -1,7 +1,4 @@
-import {
-  CreateOrderMicroserviceDto,
-  OrderDto,
-} from '@app/contracts/orders/orders/dto';
+import { CreateOrderDto, OrderDto } from '@app/contracts/orders/orders/dto';
 import { OrderWithProducts, TCreateOrder } from '../types';
 
 export class OrderMapper {
@@ -19,10 +16,11 @@ export class OrderMapper {
   }
 
   static toCreateOrderType(
-    dto: CreateOrderMicroserviceDto,
+    dto: CreateOrderDto,
+    userId: string,
     statusId: number,
   ): TCreateOrder {
-    const { userId, products } = dto;
+    const { products } = dto;
     return {
       userId,
       statusId,

@@ -1,17 +1,23 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import {
   CreateProductDto,
   ProductDto,
 } from '@app/contracts/orders/products/dto';
+import { JwtInCookies } from '../../common/decorators';
+import { Request } from 'express';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  @JwtInCookies()
   @Post()
-  async create(@Body() dto: CreateProductDto): Promise<ProductDto> {
-    return await this.productsService.create(dto);
+  async create(
+    @Body() dto: CreateProductDto,
+    @Req() request: Request,
+  ): Promise<ProductDto> {
+    return await this.productsService.create(dto, request);
   }
 
   @Get()

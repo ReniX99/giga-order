@@ -6,13 +6,17 @@ import {
   CreateProductDto,
   ProductDto,
 } from '@app/contracts/orders/products/dto';
+import { Authorization, Roles } from '../orders/common/decorators';
+import { RoleEnum } from '@app/contracts/shared/enums';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
+  @Roles(RoleEnum.MANAGER)
+  @Authorization()
   @MessagePattern(PRODUCTS_PATTERNS.CREATE)
-  async create(@Payload() dto: CreateProductDto): Promise<ProductDto> {
+  async create(@Payload('data') dto: CreateProductDto): Promise<ProductDto> {
     return await this.productsService.create(dto);
   }
 

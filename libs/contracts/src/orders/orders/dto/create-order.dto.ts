@@ -7,7 +7,3 @@ export class CreateOrderProductDto {
 
   count: number;
 }
-
-export class CreateOrderMicroserviceDto extends CreateOrderDto {
-  userId: string;
-}

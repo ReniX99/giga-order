@@ -1,28 +1,36 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ORDERS_CLIENT } from '../../constants';
 import { ClientProxy } from '@nestjs/microservices';
-import {
-  CreateOrderDto,
-  CreateOrderMicroserviceDto,
-  OrderDto,
-} from '@app/contracts/orders/orders/dto';
+import { CreateOrderDto, OrderDto } from '@app/contracts/orders/orders/dto';
 import { ORDERS_PATTERNS } from '@app/contracts/orders/orders/orders-patterns';
 import { firstValueFrom } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
+import { Request } from 'express';
+import { RequestOrdersMessageDto } from '@app/contracts/shared/dto';
 
 @Injectable()
 export class OrdersService {
   constructor(
     @Inject(ORDERS_CLIENT) private readonly ordersClient: ClientProxy,
+    private readonly authService: AuthService,
   ) {}
 
-  async create(dto: CreateOrderDto): Promise<OrderDto> {
-    const microserviceDto: CreateOrderMicroserviceDto = {
-      products: dto.products,
-      userId: '61368433-b001-41c6-b8d8-1d597468fc39',
+  async create(dto: CreateOrderDto, request: Request): Promise<OrderDto> {
+    const userInfo = await this.authService.authorize(request);
+
+    const requestMessage: RequestOrdersMessageDto<CreateOrderDto> = {
+      data: dto,
+      metadata: {
+        user: {
+          id: userInfo.userId,
+          roles: userInfo.roles,
+        },
+      },
     };
+
     const obsResponse = this.ordersClient.send<OrderDto>(
       ORDERS_PATTERNS.CREATE,
-      microserviceDto,
+      requestMessage,
     );
 
     const response = await firstValueFrom(obsResponse);
