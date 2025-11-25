@@ -2,8 +2,8 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { RoleEnum } from '@app/contracts/shared/enums';
 import { ROLES_KEY } from '../decorators/roles.decorator';
-import { Request } from 'express';
 import { RpcException } from '@nestjs/microservices';
+import { RequestOrdersMessageDto } from '@app/contracts/shared/dto';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -17,12 +17,14 @@ export class RolesGuard implements CanActivate {
 
     if (!requiredRoles) return true;
 
-    const { user } = context.switchToHttp().getRequest<Request>();
+    const { metadata } = context
+      .switchToHttp()
+      .getRequest<RequestOrdersMessageDto<any>>();
+
+    const user = metadata.user;
     if (!user) return false;
 
-    const isMatch = requiredRoles.some((r) =>
-      (user['roles'] as string[]).includes(r),
-    );
+    const isMatch = requiredRoles.some((r) => user.roles.includes(r));
 
     if (!isMatch) {
       throw new RpcException({

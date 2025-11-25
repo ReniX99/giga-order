@@ -3,7 +3,7 @@ import { RolesService } from './roles.service';
 import { RoleDto } from '@app/contracts/users/roles/dto';
 import { MessagePattern } from '@nestjs/microservices';
 import { ROLES_PATTERNS } from '@app/contracts/users/roles/roles-patterns';
-import { RoleEnum } from './enums';
+import { RoleEnum } from '@app/contracts/shared/enums';
 import { Authorization, Roles } from '../../common/decorators';
 
 @Controller()
