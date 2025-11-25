@@ -52,4 +52,13 @@ export class OrdersController {
   ) {
     return await this.ordersService.updateStatus(orderId, dto, request);
   }
+
+  @JwtInCookies()
+  @Patch('cancel/:id')
+  async cancelOrder(
+    @Param('id') orderId: string,
+    @Req() request: Request,
+  ): Promise<OrderDto> {
+    return await this.ordersService.cancelOrder(orderId, request);
+  }
 }

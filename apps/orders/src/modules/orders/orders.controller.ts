@@ -3,6 +3,7 @@ import { OrdersService } from './orders.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ORDERS_PATTERNS } from '@app/contracts/orders/orders/orders-patterns';
 import {
+  CancelOrderDto,
   CreateOrderDto,
   OrderDto,
   OrderIdDto,
@@ -48,5 +49,15 @@ export class OrdersController {
   @MessagePattern(ORDERS_PATTERNS.UPDATE_STATUS)
   async updateStatus(@Payload('data') dto: UpdateOrderStatusMicroserviceDto) {
     return await this.ordersService.updateStatus(dto);
+  }
+
+  @Roles(RoleEnum.USER)
+  @Authorization()
+  @MessagePattern(ORDERS_PATTERNS.CANCEL)
+  async cancelOrder(
+    @Payload('data') dto: CancelOrderDto,
+    @User('id') userId: string,
+  ): Promise<OrderDto> {
+    return await this.ordersService.cancelOrder(dto, userId);
   }
 }

@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ORDERS_CLIENT } from '../../constants';
 import { ClientProxy } from '@nestjs/microservices';
 import {
+  CancelOrderDto,
   CreateOrderDto,
   OrderDto,
   OrderIdDto,
@@ -114,6 +115,30 @@ export class OrdersService {
 
     const obsResponse = this.ordersClient.send<OrderDto>(
       ORDERS_PATTERNS.UPDATE_STATUS,
+      requestMessage,
+    );
+
+    const response = await firstValueFrom(obsResponse);
+    return response;
+  }
+
+  async cancelOrder(orderId: string, request: Request): Promise<OrderDto> {
+    const userInfo = await this.authService.authorize(request);
+
+    const requestMessage: RequestOrdersMessageDto<CancelOrderDto> = {
+      data: {
+        orderId,
+      },
+      metadata: {
+        user: {
+          id: userInfo.userId,
+          roles: userInfo.roles,
+        },
+      },
+    };
+
+    const obsResponse = this.ordersClient.send<OrderDto>(
+      ORDERS_PATTERNS.CANCEL,
       requestMessage,
     );
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { OrdersRepository } from './orders.repository';
 import {
+  CancelOrderDto,
   CreateOrderDto,
   OrderDto,
   OrderIdDto,
@@ -85,6 +86,38 @@ export class OrdersService {
     );
 
     const responseDto = OrderMapper.toOrderDto(updatedOrder);
+    return responseDto;
+  }
+
+  async cancelOrder(
+    requestDto: CancelOrderDto,
+    userId: string,
+  ): Promise<OrderDto> {
+    const order = await this.ordersRepository.getById(requestDto.orderId);
+
+    if (!order) {
+      throw new RpcException({
+        statusCode: 404,
+        message: 'Order not found',
+      });
+    }
+
+    if (order.userId != userId) {
+      throw new RpcException({
+        statusCode: 403,
+        message: 'Forbidden order',
+      });
+    }
+
+    const cancelStatusName = 'Отменён';
+    const cancelStatus = await this.statusesService.getByName(cancelStatusName);
+
+    const cancelledOrder = await this.ordersRepository.updateStatus(
+      requestDto.orderId,
+      cancelStatus.id,
+    );
+
+    const responseDto = OrderMapper.toOrderDto(cancelledOrder);
     return responseDto;
   }
 }
