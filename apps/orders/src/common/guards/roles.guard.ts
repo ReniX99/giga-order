@@ -29,7 +29,7 @@ export class RolesGuard implements CanActivate {
     if (!isMatch) {
       throw new RpcException({
         statusCode: 403,
-        message: 'Forbidden resouce',
+        message: 'Forbidden resource',
       });
     }
 
