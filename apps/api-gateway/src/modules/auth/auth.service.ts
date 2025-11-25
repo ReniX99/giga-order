@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { USERS_CLIENT } from '../../constants';
 import { ClientProxy } from '@nestjs/microservices';
 import {
+  AuthUserInfoDto,
   LoginMicroserviceResponseDto,
   LoginRequestDto,
   LoginResponseDto,
@@ -10,9 +11,11 @@ import {
 } from '@app/contracts/users/auth/dto';
 import { AUTH_PATTERNS } from '@app/contracts/users/auth/auth-patterns';
 import { firstValueFrom } from 'rxjs';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import * as ms from 'ms';
+import { CookiesService } from '../cookies/cookies.service';
+import { RequestMessageDto } from '@app/contracts/shared/dto';
 
 @Injectable()
 export class AuthService {
@@ -23,6 +26,7 @@ export class AuthService {
   constructor(
     @Inject(USERS_CLIENT) private usersClient: ClientProxy,
     private configService: ConfigService,
+    private readonly cookiesService: CookiesService,
   ) {
     this.COOKIE_NAME = configService.getOrThrow<string>('COOKIE_NAME');
     this.COOKIE_DOMAIN = configService.getOrThrow<string>('COOKIE_DOMAIN');
@@ -75,5 +79,23 @@ export class AuthService {
       domain: this.COOKIE_DOMAIN,
       maxAge: age,
     });
+  }
+
+  async authorize(request: Request): Promise<AuthUserInfoDto> {
+    const token = this.cookiesService.getCookie(request, 'COOKIE_NAME');
+
+    const requestMessage: RequestMessageDto<null> = {
+      metadata: {
+        token,
+      },
+    };
+
+    const obsResponse = this.usersClient.send<AuthUserInfoDto>(
+      AUTH_PATTERNS.AUTH,
+      requestMessage,
+    );
+
+    const response = await firstValueFrom(obsResponse);
+    return response;
   }
 }

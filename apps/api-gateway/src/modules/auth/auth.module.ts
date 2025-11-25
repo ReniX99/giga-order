@@ -4,6 +4,7 @@ import { AuthController } from './auth.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { USERS_CLIENT } from '../../constants';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { CookiesModule } from '../cookies/cookies.module';
 
 @Module({
   imports: [
@@ -21,8 +22,10 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         inject: [ConfigService],
       },
     ]),
+    CookiesModule,
   ],
   controllers: [AuthController],
   providers: [AuthService],
+  exports: [AuthService],
 })
 export class AuthModule {}
