@@ -91,4 +91,26 @@ export class OrdersRepository {
       },
     });
   }
+
+  async updateStatus(
+    orderId: string,
+    statusId: number,
+  ): Promise<OrderWithProducts> {
+    return await this.prismaSerivce.order.update({
+      where: {
+        id: orderId,
+      },
+      data: {
+        statusId,
+      },
+      include: {
+        products: {
+          include: {
+            product: true,
+          },
+        },
+        status: true,
+      },
+    });
+  }
 }

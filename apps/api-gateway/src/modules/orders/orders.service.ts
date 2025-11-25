@@ -5,6 +5,8 @@ import {
   CreateOrderDto,
   OrderDto,
   OrderIdDto,
+  UpdateOrderStatusDto,
+  UpdateOrderStatusMicroserviceDto,
 } from '@app/contracts/orders/orders/dto';
 import { ORDERS_PATTERNS } from '@app/contracts/orders/orders/orders-patterns';
 import { firstValueFrom } from 'rxjs';
@@ -82,6 +84,36 @@ export class OrdersService {
 
     const obsResponse = this.ordersClient.send<OrderDto[]>(
       ORDERS_PATTERNS.GET_ALL,
+      requestMessage,
+    );
+
+    const response = await firstValueFrom(obsResponse);
+    return response;
+  }
+
+  async updateStatus(
+    orderId: string,
+    dto: UpdateOrderStatusDto,
+    request: Request,
+  ): Promise<OrderDto> {
+    const userInfo = await this.authService.authorize(request);
+
+    const requestMessage: RequestOrdersMessageDto<UpdateOrderStatusMicroserviceDto> =
+      {
+        data: {
+          orderId,
+          statusId: dto.statusId,
+        },
+        metadata: {
+          user: {
+            id: userInfo.userId,
+            roles: userInfo.roles,
+          },
+        },
+      };
+
+    const obsResponse = this.ordersClient.send<OrderDto>(
+      ORDERS_PATTERNS.UPDATE_STATUS,
       requestMessage,
     );
 

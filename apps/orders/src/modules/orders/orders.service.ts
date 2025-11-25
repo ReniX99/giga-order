@@ -4,6 +4,7 @@ import {
   CreateOrderDto,
   OrderDto,
   OrderIdDto,
+  UpdateOrderStatusMicroserviceDto,
 } from '@app/contracts/orders/orders/dto';
 import { OrderMapper } from './mappers';
 import { StatusesService } from '../statuses/statuses.service';
@@ -21,7 +22,7 @@ export class OrdersService {
   ) {}
 
   async create(requestDto: CreateOrderDto, userId: string): Promise<OrderDto> {
-    const newStatus = await this.statusesService.getById(this.newStatusName);
+    const newStatus = await this.statusesService.getByName(this.newStatusName);
     const newStatusId = newStatus.id;
 
     const order: TCreateOrder = OrderMapper.toCreateOrderType(
@@ -62,5 +63,28 @@ export class OrdersService {
 
     const dto = orders.map((o) => OrderMapper.toOrderDto(o));
     return dto;
+  }
+
+  async updateStatus(
+    requestDto: UpdateOrderStatusMicroserviceDto,
+  ): Promise<OrderDto> {
+    const order = await this.ordersRepository.getById(requestDto.orderId);
+
+    if (!order) {
+      throw new RpcException({
+        statusCode: 404,
+        message: 'Order not found',
+      });
+    }
+
+    await this.statusesService.getById(requestDto.statusId);
+
+    const updatedOrder = await this.ordersRepository.updateStatus(
+      requestDto.orderId,
+      requestDto.statusId,
+    );
+
+    const responseDto = OrderMapper.toOrderDto(updatedOrder);
+    return responseDto;
   }
 }

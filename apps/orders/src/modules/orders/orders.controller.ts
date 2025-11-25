@@ -6,6 +6,7 @@ import {
   CreateOrderDto,
   OrderDto,
   OrderIdDto,
+  UpdateOrderStatusMicroserviceDto,
 } from '@app/contracts/orders/orders/dto';
 import { Authorization, Roles, User } from '../../common/decorators';
 import { RoleEnum } from '@app/contracts/shared/enums';
@@ -40,5 +41,12 @@ export class OrdersController {
   @MessagePattern(ORDERS_PATTERNS.GET_ALL)
   async getAll(@Payload('data') query: OrderQuery, @User('id') userId: string) {
     return await this.ordersService.getAll(query, userId);
+  }
+
+  @Roles(RoleEnum.MANAGER)
+  @Authorization()
+  @MessagePattern(ORDERS_PATTERNS.UPDATE_STATUS)
+  async updateStatus(@Payload('data') dto: UpdateOrderStatusMicroserviceDto) {
+    return await this.ordersService.updateStatus(dto);
   }
 }

@@ -13,4 +13,12 @@ export class StatusesRepository {
       },
     });
   }
+
+  async getById(id: number): Promise<Status | null> {
+    return await this.prismaService.status.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 }

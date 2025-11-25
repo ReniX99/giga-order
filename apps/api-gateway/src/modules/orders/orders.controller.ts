@@ -1,6 +1,19 @@
-import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { CreateOrderDto, OrderDto } from '@app/contracts/orders/orders/dto';
+import {
+  CreateOrderDto,
+  OrderDto,
+  UpdateOrderStatusDto,
+} from '@app/contracts/orders/orders/dto';
 import { JwtInCookies } from '../../common/decorators';
 import { Request } from 'express';
 import { OrderQuery } from '@app/contracts/orders/orders/query';
@@ -28,5 +41,15 @@ export class OrdersController {
   @Get()
   async getAll(@Query() query: OrderQuery, @Req() request: Request) {
     return await this.ordersService.getAll(query, request);
+  }
+
+  @JwtInCookies()
+  @Patch(':id')
+  async updateStatus(
+    @Param('id') orderId,
+    @Body() dto: UpdateOrderStatusDto,
+    @Req() request: Request,
+  ) {
+    return await this.ordersService.updateStatus(orderId, dto, request);
   }
 }

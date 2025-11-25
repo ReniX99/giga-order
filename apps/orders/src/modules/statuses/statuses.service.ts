@@ -7,8 +7,18 @@ import { RpcException } from '@nestjs/microservices';
 export class StatusesService {
   constructor(private readonly statusesRepository: StatusesRepository) {}
 
-  async getById(name: string): Promise<Status> {
+  async getByName(name: string): Promise<Status> {
     const status = await this.statusesRepository.getByName(name);
+
+    if (!status) {
+      throw new RpcException({ statusCode: 404, message: 'Status not found' });
+    }
+
+    return status;
+  }
+
+  async getById(id: number): Promise<Status> {
+    const status = await this.statusesRepository.getById(id);
 
     if (!status) {
       throw new RpcException({ statusCode: 404, message: 'Status not found' });
