@@ -7,7 +7,7 @@ import {
   DeleteProductDto,
   ProductDto,
 } from '@app/contracts/orders/products/dto';
-import { Authorization, Roles } from '../orders/common/decorators';
+import { Authorization, Roles } from '../../common/decorators';
 import { RoleEnum } from '@app/contracts/shared/enums';
 
 @Controller('products')
