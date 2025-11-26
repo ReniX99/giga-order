@@ -16,4 +16,11 @@ export class UsersRolesController {
   async create(@Payload('data') dto: UserRoleDto): Promise<boolean> {
     return await this.usersRolesService.create(dto);
   }
+
+  @Roles(RoleEnum.ADMIN)
+  @Authorization()
+  @MessagePattern(USERS_ROLES_PATTERNS.DELETE)
+  async delete(@Payload('data') dto: UserRoleDto): Promise<boolean> {
+    return await this.usersRolesService.delete(dto);
+  }
 }

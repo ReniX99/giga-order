@@ -14,4 +14,24 @@ export class UsersRolesRepository {
       },
     });
   }
+
+  async getByIds(userId: string, roleId: number): Promise<UserRole | null> {
+    return await this.prismaService.userRole.findFirst({
+      where: {
+        userId,
+        roleId,
+      },
+    });
+  }
+
+  async delete(userId: string, roleId: number): Promise<UserRole> {
+    return await this.prismaService.userRole.delete({
+      where: {
+        userId_roleId: {
+          userId,
+          roleId,
+        },
+      },
+    });
+  }
 }

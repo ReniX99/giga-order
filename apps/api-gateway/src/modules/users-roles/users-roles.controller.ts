@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Body, Controller, Delete, Post, Req } from '@nestjs/common';
 import { UsersRolesService } from './users-roles.service';
 import { JwtInCookies } from '../../common/decorators';
 import { Request } from 'express';
@@ -15,5 +15,14 @@ export class UsersRolesController {
     @Body() dto: UserRoleDto,
   ): Promise<void> {
     return this.usersRolesService.create(request, dto);
+  }
+
+  @JwtInCookies()
+  @Delete()
+  async delete(
+    @Req() request: Request,
+    @Body() dto: UserRoleDto,
+  ): Promise<void> {
+    return this.usersRolesService.delete(request, dto);
   }
 }

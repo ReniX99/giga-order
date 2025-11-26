@@ -34,4 +34,22 @@ export class UsersRolesService {
 
     await firstValueFrom(obsResponse);
   }
+
+  async delete(request: Request, dto: UserRoleDto): Promise<void> {
+    const token = this.cookiesService.getCookie(request, this.COOKIE_NAME);
+
+    const requestMessage: RequestMessageDto<UserRoleDto> = {
+      data: dto,
+      metadata: {
+        token,
+      },
+    };
+
+    const obsResponse = this.usersClient.send(
+      USERS_ROLES_PATTERNS.DELETE,
+      requestMessage,
+    );
+
+    await firstValueFrom(obsResponse);
+  }
 }

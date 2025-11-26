@@ -31,4 +31,20 @@ export class UsersRolesService {
     await this.usersRolesRepository.create(userId, roleId);
     return true;
   }
+
+  async delete(dto: UserRoleDto): Promise<boolean> {
+    const { roleId, userId } = dto;
+
+    const userRole = await this.usersRolesRepository.getByIds(userId, roleId);
+
+    if (!userRole) {
+      throw new RpcException({
+        statusCode: 404,
+        message: 'User role not found',
+      });
+    }
+
+    await this.usersRolesRepository.delete(userId, roleId);
+    return true;
+  }
 }
