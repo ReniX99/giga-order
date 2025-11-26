@@ -46,6 +46,19 @@ services:
       - api-gateway
       - postgres-users
 
+  orders-service:
+    build:
+      context: .
+      dockerfile: apps/orders/Dockerfile
+    container_name: orders-service
+    env_file:
+      - apps/orders/.env
+    ports:
+      - 3002:3002
+    depends_on:
+      - api-gateway
+      - postgres-orders
+
 volumes:
   postgres-data-users:
   postgres-data-orders:
