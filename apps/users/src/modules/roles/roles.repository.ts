@@ -17,4 +17,12 @@ export class RolesRepository {
   async getAll(): Promise<Role[]> {
     return await this.prismaService.role.findMany();
   }
+
+  async getById(id: number): Promise<Role | null> {
+    return await this.prismaService.role.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 }

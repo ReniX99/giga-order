@@ -26,6 +26,14 @@ export class RolesService {
     return role!;
   }
 
+  async getById(id: number): Promise<Role> {
+    const role = await this.rolesRepository.getById(id);
+
+    this.isRoleNull(role);
+
+    return role!;
+  }
+
   async getAll(): Promise<RoleDto[]> {
     const roles = await this.rolesRepository.getAll();
 
